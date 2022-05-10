@@ -9,40 +9,26 @@ forcelog();
 require './header.php';
 ?>
 
+
+<?php
+//<!-- **************************************** -->
+//<!-- Liste des derniers messages              -->
+if (true) {
+    ?>
+
+    <a class="ui button" href="play.php"> Jouer </a>
+
+    <?php
+}
+?>
+
+
+
 <?php
 // Ajout formulaire envoi de message
 //include './envoi_message.php';
 ?>              
 <!-- **************************************** -->      
-
-<?php
-//<!-- **************************************** -->
-//<!-- Liste des derniers messages              -->
-if (false) {
-    ?>
-
-    <div class="ui segment">
-        <h1 class="ui header"> Derniers messages </h1>
-        <div class="ui segment">
-            <h4 class="ui header">
-                De admin à faceless, le 2022-04-05 13:27:42              </h4>
-            <p>John DOE (johndoe) aimerait être ami avec vous.</p>
-        </div>  
-        <div class="ui segment">
-            <h4 class="ui header">
-                De faceless à bartsim, le 2022-03-15 14:53:00              </h4>
-            <p>Super tout fonctionne ! Enfin je parle de la partie corrigée par nos enseignants ! </p>
-        </div>  
-        <div class="ui segment">
-            <h4 class="ui header">
-                De bartsim à faceless, le 2022-03-15 14:50:00              </h4>
-            <p>Bonjour, je tente de faire fonctionner cette super application que nous développons en LO07. </p>
-        </div>  
-    </div>
-    <!-- **************************************** -->                
-    <?php
-}
-?>
 
 
 

@@ -27,7 +27,6 @@
                 <a class="item" href="inscription.php">S'inscrire</a>
             <?php } ?>
         </div>
-
         <div class="ui main text container">
             <?php
             if ($logs) {
@@ -66,7 +65,9 @@
                         }
                         ?>
                     </div>                
-                </div>          
+                </div>    
                 <?php
             }
             ?>
+
+        </div> 
