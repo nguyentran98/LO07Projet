@@ -54,8 +54,21 @@ require './header.php';
 ?>
 
 <div class="ui segment">
-    <a class="ui button" href="gestion_utilisateurs.php"> Gestion utilisateurs </a>
-    <a class="ui button" href="gestion_histoires.php"> Gestion histoires </a>
+    <h1 class="ui header">Ajouter une phrase</h1>
+    <div class="ui divider"></div>
+    <form class="ui form" action="pannel.php" method="POST">
+        <div class="field">
+            <label>Table</label>
+            <select class="ui dropdown" name="id_destinataire">
+                <option value=0>Phrase</option>
+            </select>
+        </div>
+        <div class="ui field">
+            <label>Phrase</label>
+            <textarea rows="1" name="phrase"></textarea>
+        </div>
+        <button class="ui button" type="submit" name="add"> Ajouter </button>
+    </form>
 </div>                
 <!-- **************************************** -->     
 <?php

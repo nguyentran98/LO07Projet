@@ -4,28 +4,21 @@ require './assets.php';
 require './authentification.php';
 
 // Initialisation des variables contenant les données saisies dans le formulaire
-$sexe = "";
-$civilite = "";
-$checked_h = "";
-$checked_f = "";
 $nom = "";
 $prenom = "";
-$mail = "";
-$telephone = "";
-$pseudo = "";
+$Pseudo = "";
 $passe1 = "";
 $passe2 = "";
-$abo_newsletter = 0;
-$checked_abonews = "";
-$commentaire = "";
 
 require './base_connexion.php';
+
+require './sqlcommands.php';
 
 // Si aucun message d'erreur
 if (empty($message_erreur)) {
     if (isset($_POST['inscrire'])) {
         //***************************
-        // Clic sur le bouton "S'inscrire" de valeur name="inscrire"
+        // Clic sur le bouton "S'inscrire" de valeur Nom="inscrire"
         // Traitement du formulaire
         // 
         // Filtrage du contenu de $_POST et assignation à des variables locales
@@ -33,27 +26,11 @@ if (empty($message_erreur)) {
         // trim() : Supprime les espaces (ou d'autres caractères) en début et fin de chaîne
         $nom = trim(htmlspecialchars($_POST['nom']));
         $prenom = trim(htmlspecialchars($_POST['prenom']));
-        $mail = htmlspecialchars($_POST['mail']);
-        $telephone = htmlspecialchars($_POST['telephone']);
-        $pseudo = htmlspecialchars($_POST['pseudo']);
+        $Pseudo = htmlspecialchars($_POST['Pseudo']);
         $passe1 = trim(htmlspecialchars($_POST['passe1']));
         $passe2 = trim(htmlspecialchars($_POST['passe2']));
-        $commentaire = htmlspecialchars($_POST['commentaire']);
 
         // Vérification de toutes les valeurs saisies
-
-        if (isset($_POST['civilite'])) {
-            $sexe = $_POST['civilite'];
-            if ($sexe == "H") {
-                $checked_h = "checked";
-                $civilite = "M";
-            } else {
-                $checked_f = "checked";
-                $civilite = "Mme";
-            }
-        } else {
-            $message_erreur .= "    La civilité doit être cochée<br>\n";
-        }
 
         if (empty($nom)) {
             $message_erreur .= "    Le champ nom est obligatoire<br>\n";
@@ -73,19 +50,11 @@ if (empty($message_erreur)) {
             $message_erreur .= "    Le prénom ne doit comporter que des lettres<br>\n";
         }
 
-        if (empty($mail)) {
-            $message_erreur .= "    Le champ mail est obligatoire<br>\n";
-        } elseif (strlen($mail) > 250) {
-            $message_erreur .= "    Le champ mail doit être inférieur à 250 caractères<br>\n";
-        } elseif (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i', $mail)) {
-            $message_erreur .= "    Le champ mail doit être valide mail@domaine.fr<br>\n";
-        }
-
-        if (empty($pseudo)) {
+        if (empty($Pseudo)) {
             $message_erreur .= "    Le champ pseudo est obligatoire<br>\n";
-        } elseif (strlen($pseudo) > 10 || strlen($pseudo) < 5) {
-            $message_erreur .= "    Le pseudo doit être composé de 5 à 10 caractères<br>\n";
-        } elseif (!preg_match('/^[a-zA-Z0-9]*$/u', $pseudo)) {
+        } elseif (strlen($Pseudo) > 15 || strlen($Pseudo) < 3) {
+            $message_erreur .= "    Le pseudo doit être composé de 3 à 15 caractères<br>\n";
+        } elseif (!preg_match('/^[a-zA-Z0-9]*$/u', $Pseudo)) {
             $message_erreur .= "    Le pseudo ne doit comporter que des lettres non accentuées ou des chiffres et pas d'espaces<br>\n";
         }
 
@@ -102,14 +71,6 @@ if (empty($message_erreur)) {
             $message_erreur .= "    Les mots de passe sont différents<br>\n";
         }
 
-        // Vérification de l'état coché de la case "Abonnement à la newsletter"
-        if (isset($_POST['abo_newsletter'])) {
-            $abo_newsletter = 1;
-            $checked_abonews = "checked";
-        } else {
-            $abo_newsletter = 0;
-        }
-
         // Cryptage du mot de passe
         $passe_chiffre = password_hash($passe1, PASSWORD_DEFAULT);
 
@@ -121,27 +82,13 @@ if (empty($message_erreur)) {
             // pas déjà dans la table
             // 
             // Vérification que le pseudo n'existe pas dans la table utilisateur
-            $requete = "select * from utilisateur where Pseudo = '$pseudo'";
+            $requete = "select * from utilisateur where Pseudo = '$Pseudo'";
             $resultat = mysqli_query($connexion, $requete);
             if ($resultat) {
                 $nbligne = mysqli_num_rows($resultat);
                 if ($nbligne != 0) {
                     // Le pseudo existe déjà
-                    $message_erreur .= "Le pseudo $pseudo existe déjà<br>\n";
-                }
-            } else {
-                $message_erreur .= "Erreur de la requête $requete<br>\n";
-                $message_erreur .= "  Erreur n° " . mysqli_errno($connexion) . " : " . mysqli_error($connexion) . "<br>\n";
-            }
-
-            // Vérification que le mail n'existe pas dans la table utilisateur
-            $requete = "select * from utilisateur where Mail = '$mail'";
-            $resultat = mysqli_query($connexion, $requete);
-            if ($resultat) {
-                $nbligne = mysqli_num_rows($resultat);
-                if ($nbligne != 0) {
-                    // Le mail existe déjà
-                    $message_erreur .= "Le mail $mail existe déjà<br>\n";
+                    $message_erreur .= "Le pseudo $Pseudo existe déjà<br>\n";
                 }
             } else {
                 $message_erreur .= "Erreur de la requête $requete<br>\n";
@@ -150,15 +97,9 @@ if (empty($message_erreur)) {
 
             // Si aucun message d'erreur
             if (empty($message_erreur)) {
-                // Requête d'insertion de l'utilisateur dans la table utilisateur
-                $requete = "insert into utilisateur (Sexe, Nom, Prenom, Mail, Telephone,
-                      Pseudo, Password, AboNewsletter, Commentaire)
-                    values ('$sexe', '$nom', '$prenom', '$mail', ";
-                $requete .= empty($telephone) ? "null" : "'$telephone'";
-                $requete .= ", '$pseudo', '$passe_chiffre', $abo_newsletter, ";
-                $requete .= (empty($commentaire)) ? "null" : "'$commentaire'";
-                $requete .= ");";
-
+                // Requête d'insertion de l'utilisateur dans la table utilisateur                
+                $requete = "INSERT INTO utilisateur (nom, prenom, Pseudo, password, create_time) "
+                        . "VALUES ('$nom', '$prenom', '$Pseudo', '$passe_chiffre', current_timestamp());";
                 // Exécution de la requête
                 $resultat = mysqli_query($connexion, $requete);
                 if (!$resultat) {
@@ -176,28 +117,10 @@ if (empty($message_erreur)) {
             $message .= "      <li>Civilité : " . $civilite . "</li>\n";
             $message .= "      <li>Nom : " . $nom . "</li>\n";
             $message .= "      <li>Prénom : " . $prenom . "</li>\n";
-            $message .= "      <li>Mail : " . $mail . "</li>\n";
-            if (empty($telephone)) {
-                $message .= "      <li>Téléphone : Non saisi</li>\n";
-            } else {
-                $message .= "      <li>Téléphone : " . $telephone . "</li>\n";
-            }
-            $message .= "      <li>Pseudo : " . $pseudo . "</li>\n";
+            $message .= "      <li>Pseudo : " . $Pseudo . "</li>\n";
             //$message .= "      <li>Mot de passe 1 : " . $passe1 . "</li>\n";
             //$message .= "      <li>Mot de passe 2 : " . $passe2 . "</li>\n";
             $message .= "      <li>Mot de passe chiffré : " . $passe_chiffre . "</li>\n";
-            $message .= "      <li>Inscription à la newsletter : ";
-            if ($abo_newsletter == 1) {
-                $message .= "Oui</li>\n";
-            } else {
-                $message .= "Non</li>\n";
-            }
-            $message .= "      <li>Commentaire : ";
-            if (empty($commentaire)) {
-                $message .= "Aucun</li>\n";
-            } else {
-                $message .= "\n<blockquote>" . nl2br($commentaire, false) . "</blockquote></li>\n";
-            }
             $message .= "    </ul>\n";
         }
     }
@@ -219,21 +142,6 @@ if (!empty($message_erreur) || !(isset($_POST['inscrire']))) {
         <h1 class="ui header">Inscription</h1>
         <form class="ui form" method="POST" action="">
             <h4 class="ui dividing header">Coordonnées</h4>
-            <div class="inline fields">
-                <label>Civilité :</label>
-                <div class="field">
-                    <div class="ui radio checkbox">
-                        <input type="radio" id="edit-m" name="civilite" value="H" <?php echo $checked_h ?>>
-                        <label for="edit-m">M</label>
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="ui radio checkbox">
-                        <input type="radio" id="edit-mme" name="civilite" value="F" <?php echo $checked_f ?>>
-                        <label for="edit-mme">Mme</label>
-                    </div>
-                </div>
-            </div>
             <div class="two fields">
                 <div class="field">
                     <label for="edit-nom">Nom</label>
@@ -244,18 +152,10 @@ if (!empty($message_erreur) || !(isset($_POST['inscrire']))) {
                     <input type="text" id="edit-prenom" name="prenom" placeholder="Prénom" value="<?php echo $prenom ?>" maxlength=100 required>
                 </div>
             </div>
-            <div class="field">
-                <label for="edit-mail">Adresse Mail</label>
-                <input type="email" id="edit-mail" name="mail" placeholder="Adresse Mail" value="<?php echo $mail ?>" maxlength=250 required>
-            </div>
-            <div class="field">
-                <label for="edit-telephone">Numéro de téléphone</label>
-                <input type="tel" id="edit-telephone" name="telephone" placeholder="Numéro de téléphone (facultatif)" value="<?php echo $telephone ?>" maxlength=50>
-            </div>
             <h4 class="ui dividing header">Informations de connexion</h4>
             <div class="field">
                 <label for="edit-pseudo">Pseudo</label>
-                <input type="text" id="edit-pseudo" name="pseudo" placeholder="Pseudo" value="<?php echo $pseudo ?>" minlength="5" maxlength=10 required>
+                <input type="text" id="edit-pseudo" name="Pseudo" placeholder="Pseudo" value="<?php echo $Pseudo ?>" minlength="5" maxlength=10 required>
             </div>  
             <div class="two fields">
                 <div class="field">
@@ -266,17 +166,6 @@ if (!empty($message_erreur) || !(isset($_POST['inscrire']))) {
                     <label for="edit-passe2">Confirmer le mot de passe</label>
                     <input type="password" id="edit-passe2" name="passe2" placeholder="Mot de passe" value="" minlength="6" required>
                 </div>
-            </div>
-            <h4 class="ui dividing header">Divers</h4>
-            <div class="field">
-                <div class="ui checkbox">
-                    <input type="checkbox" id="edit-abo_newsletter" name="abo_newsletter" value="" <?php echo $checked_abonews ?>>
-                    <label for="edit-abo_newsletter">Abonnement à la newsletter</label>
-                </div>
-            </div>
-            <div class="field">
-                <label for="edit-commentaire">Commentaire</label>
-                <textarea id="edit-commentaire" name="commentaire" placeholder="Laissez un commentaire" rows="2"><?php echo $commentaire ?></textarea>
             </div>
             <button class="ui button" type="submit" name="inscrire"> S'inscrire </button>
         </form>

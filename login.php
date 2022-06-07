@@ -69,6 +69,7 @@ if (empty($message_erreur)) {
                         $_SESSION['session_nom'] = $utilisateur['Nom'];
                         $_SESSION['session_prenom'] = $utilisateur['Prenom'];
                         $_SESSION['session_pseudo'] = $utilisateur['Pseudo'];
+                        $_SESSION['session_permsgroup'] = $utilisateur['permsgroup_tag'];
 
                         // Redirection vers la page index.php
                         header('Location: index.php');

@@ -12,6 +12,7 @@ if (isset($_SESSION['session_idutilisateur'])) {
     $session_nom = $_SESSION['session_nom'];
     $session_prenom = $_SESSION['session_prenom'];
     $session_pseudo = $_SESSION['session_pseudo'];
+    $session_permsgroup = $_SESSION['session_permsgroup'];
 }
 
 function forcelog() {

@@ -20,7 +20,13 @@
                 <div class="item right"><?php echo "$session_prenom $session_nom ($session_pseudo)"; ?></div>
                 <a class="item" href="logout.php">Déconnecter</a>
                 <a class="item" href="inscription.php">Compte</a>
-            <?php } else {
+                <?php
+                if (strspn($session_permsgroup, "admin")) {
+                    ?>
+                    <a class="item" href="pannel.php">Pannel administrateur</a>
+                    <?php
+                }
+            } else {
                 ?>
                 <div class="item right">- - ( - )</div>
                 <a class="item" href="login.php">Connecter</a>
