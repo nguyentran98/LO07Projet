@@ -13,6 +13,8 @@ $passe1 = "";
 
 require './base_connexion.php';
 
+require './sqlcommands.php';
+
 // Si aucun message d'erreur
 if (empty($message_erreur)) {
     if (isset($_POST['connexion'])) {
@@ -57,7 +59,23 @@ if (empty($message_erreur)) {
                     $utilisateur = mysqli_fetch_assoc($resultat);
                     if (password_verify($passe1, $utilisateur['Password'])) {
                         // Mot de passe saisie valide
+                        
+                        // Ajout de ocnnexion logs
+                        $idutilisateur = $utilisateur['IdUtilisateur'];
+                        $requete = "INSERT INTO connexion_logs (datetime, utilisateur_IdUtilisateur) VALUES (current_timestamp(), '$idutilisateur');";
+                        sqlrequest($requete);
+                        
                         $message .= "Bienvenue {$utilisateur['Prenom']} <br>";
+                        
+                        $permsgroup_tag = $utilisateur['permsgroup_tag'];
+                        $requete = "select perms_tag from permsgroup_has_perms where permsgroup_tag = '$permsgroup_tag'";
+                        $permsgroup = array();
+                        $resultat = sqlrequest($requete);
+                        if ($resultat) {
+                            while ($ligne = mysqli_fetch_assoc($resultat)) {
+                                array_push($permsgroup, $ligne['perms_tag']);
+                            }
+                        }
 
                         // Démarrage d'une session
                         if (session_status() != PHP_SESSION_ACTIVE) {
@@ -69,7 +87,7 @@ if (empty($message_erreur)) {
                         $_SESSION['session_nom'] = $utilisateur['Nom'];
                         $_SESSION['session_prenom'] = $utilisateur['Prenom'];
                         $_SESSION['session_pseudo'] = $utilisateur['Pseudo'];
-                        $_SESSION['session_permsgroup'] = $utilisateur['permsgroup_tag'];
+                        $_SESSION['session_permsgroup'] = $permsgroup;
 
                         // Redirection vers la page index.php
                         header('Location: index.php');

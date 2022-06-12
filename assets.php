@@ -1,5 +1,5 @@
 <?php
-$logs = false;
+$logs = true;
 
 $logs_message = "";
 $logs_message_erreur = "";

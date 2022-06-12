@@ -15,9 +15,13 @@ if (isset($_SESSION['session_idutilisateur'])) {
     $session_permsgroup = $_SESSION['session_permsgroup'];
 }
 
-function forcelog() {
+function forcelog($perms) {
+    global $session_permsgroup;
     if (!isset($_SESSION['session_idutilisateur'])) {
         header('Location: login.php');
+        exit();
+    } elseif (!empty($perms) && !in_array($perms, $session_permsgroup)) {
+        header('Location: index.php');
         exit();
     }
 }

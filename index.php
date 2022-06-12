@@ -2,7 +2,7 @@
 require './assets.php';
 
 require './authentification.php';
-forcelog();
+forcelog('');
 
 // **********************************************
 // Construction de la page HTML

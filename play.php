@@ -1,41 +1,29 @@
 <?php
 require './assets.php';
 
-$actions = array();
+$text = "";
+$choix1text = "";
+$choix1id = null;
+$choix2text = "";
+$choix2id = null;
 
 require './authentification.php';
-forcelog();
+forcelog('player');
 
 require './base_connexion.php';
 
 require './sqlcommands.php';
 
 $requete = "select * from histoire";
-$dataset = sqlrequest($requete);
-
-$nbligne = mysqli_num_rows($dataset);
-if ($nbligne == 0) {
-    // Pas de phrase
-    $message_erreur .= "Aucune phrase !";
-} else {
-    while ($ligne = mysqli_fetch_assoc($dataset)) {
-        $actions .= array(
-            $ligne['id'] => array(
-            "phrase" => $ligne['phrase']
-        ));
+$resultat = sqlrequest($requete);
+if ($resultat) {
+    while ($ligne = mysqli_fetch_assoc($resultat)) {
+        $text = $ligne['text'];
+        $choix1text = $ligne['choix1_text'];
+        $choix1id = $ligne['choix1_id'];
+        $choix2text = $ligne['choix2_text'];
+        $choix2id = $ligne['choix2_id'];
     }
-
-    echo "table action : $action";
-
-    /*
-      for ($i = 0; $i < mysqli_num_rows( $dataset ); ++$i)
-      {
-      $line = mysqli_fetch_row($dataset);
-      echo( "$line[0] - $line[1]\n");
-      }
-
-     * 
-     */
 }
 
 require './base_deconnexion.php';
@@ -44,12 +32,26 @@ require './base_deconnexion.php';
 // Construction de la page HTML
 require './header.php';
 ?>
+<div class="ui main text container">
+    <div class="ui segment">   
+        <div class="two fields">
+            <button class="ui button">
+                Choix 1
+            </button>
+            <button class="ui button">
+                Choix 2
+            </button>
+        </div>
+    </div>
+</div>
 
 <?php
 //<!-- **************************************** -->
 //<!-- Liste des derniers messages              -->
 if (true) {
     ?>
+
+
 
     <div class="ui grid">
         <div class="four wide column">
@@ -61,9 +63,6 @@ if (true) {
             </button>
             <button class="ui button">
                 Choix 2
-            </button>
-            <button class="ui button">
-                Choix 3
             </button>
         </div>
         <div class="four wide column">

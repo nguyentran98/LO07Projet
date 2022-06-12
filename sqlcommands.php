@@ -2,8 +2,8 @@
 
 function sqlrequest($requete) {
     global $connexion;
-    global $message;
-    global $message_erreur;
+    global $logs_message;
+    global $logs_message_erreur;
 
     try {
         $resultat = mysqli_query($connexion, $requete);
@@ -12,13 +12,26 @@ function sqlrequest($requete) {
     }
 
     if ($resultat) {
-        $message .= "Requête réussi <br>";
+        $logs_message .= "Requête réussi <br>";
         return $resultat;
     } else {
-        $message_erreur .= "Erreur de la requête $requete<br>";
-        $message_erreur .= "  Erreur n° " . mysqli_errno($connexion) . " : " . mysqli_error($connexion) . "<br>";
+        $logs_message_erreur .= "Erreur de la requête $requete<br>";
+        $logs_message_erreur .= "  Erreur n° " . mysqli_errno($connexion) . " : " . mysqli_error($connexion) . "<br>";
         return false;
     }
 }
+
+function sfwifexist($requetesfw) {
+    global $message_erreur;
+
+    $resultat = sqlrequest($requetesfw);
+
+    $nbligne = mysqli_num_rows($resultat);
+    if ($nbligne != 0) {
+        $message_erreur .= "La phrase existe déjà <br>";
+        return true;
+    }
+}
+
 
 ?>

@@ -21,7 +21,7 @@
                 <a class="item" href="logout.php">Déconnecter</a>
                 <a class="item" href="inscription.php">Compte</a>
                 <?php
-                if (strspn($session_permsgroup, "admin")) {
+                if (in_array('admin', $session_permsgroup)) {
                     ?>
                     <a class="item" href="pannel.php">Pannel administrateur</a>
                     <?php
