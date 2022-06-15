@@ -6,10 +6,13 @@ if (isset($_POST['history_type'])) {
     $history_type_id = trim(htmlspecialchars($_POST['history_type']));
 }
 
+/*
 $history_cat_id = null;
 if (isset($_POST['history_cat'])) {
     $history_cat_id = trim(htmlspecialchars($_POST['history_cat']));
 }
+ * 
+ */
 
 require './authentification.php';
 forcelog('admin');
@@ -38,19 +41,20 @@ if (isset($history_type_id) OR TRUE) {
         global $liste_deroulante_history_after;
         global $history_type_id;
         $liste_deroulante_history_after = "";
-        $requete = "SELECT * FROM histoire WHERE category_tag = 'end' OR category_tag = 'middle' AND histoire_type_id = $history_type_id";
+        $requete = "SELECT * FROM histoire WHERE histoire_type_id = $history_type_id";
         $resultat = sqlrequest($requete);
         if ($resultat) {
             while ($ligne = mysqli_fetch_assoc($resultat)) {
                 $id = $ligne['id'];
                 $text = $ligne['text'];
-                $liste_deroulante_history_after .= "<option value=\"$id\" selected>$text</option> \n";
+                $liste_deroulante_history_after .= "<option value=\"$id\">$text</option> \n";
             }
         }
     }
 }
 
 // Listage est maintien de la categorie séléctionnée
+/*
 if (isset($history_cat_id) OR TRUE) {
     $liste_deroulante_category = "<option value=\"null\" selected>---</option> \n";
     $requete = "SELECT * FROM category";
@@ -66,6 +70,7 @@ if (isset($history_cat_id) OR TRUE) {
         }
     }
 }
+*/
 
 // Connexion à la base de données cuicui du serveur localhost
 
@@ -116,6 +121,7 @@ require './header.php';
                 ?>
             </select>
         </div>
+        <?php if(false) { ?>
         <div class="field">
             <label for="history_cat">Choix categorie</label>
             <select name="history_cat" onchange="this.form.submit()">
@@ -124,6 +130,7 @@ require './header.php';
                 ?>
             </select>
         </div>
+        <?php } ?>
         <div class="field">
             <label for="edt-text">Text</label>
             <input type="text" id="edt-text" name="text" placeholder="truc " value="" maxlength=255 required>
@@ -135,7 +142,7 @@ require './header.php';
             </div>  
             <div class="field">
                 <label for="edt-text_choix_1_id">Suite choix 1 text</label>
-                <select name="text_choix_1_id" onchange="this.form.submit()">
+                <select name="text_choix_1_id">
                     <?php
                     if (isset($_POST['history_type'])) {
                         echo $liste_deroulante_history_after;
@@ -151,7 +158,7 @@ require './header.php';
             </div>  
             <div class="field">
                 <label for="edt-text_choix_2_id">Suite choix 2 text</label>
-                <select name="text_choix_2_id" onchange="this.form.submit()">
+                <select name="text_choix_2_id">
                     <?php
                     if (isset($_POST['history_type'])) {
                         echo $liste_deroulante_history_after;
