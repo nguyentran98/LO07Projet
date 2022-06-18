@@ -109,37 +109,31 @@ require './base_deconnexion.php';
 require './header.php';
 ?>
 
-<div class="ui segment">
-    <h1 class="ui header">Ajouter une histoire</h1>
-    <div class="ui divider"></div>
-    <form class="ui form" method="POST" action="">
-        <div class="field">
-            <label for="history_type">Choix type d'histoire</label>
+<div class="history">
+    <h1>Ajouter une histoire</h1>
+    <form method="POST" action="">
+        <label for="history_type">Choix type d'histoire</label>
             <select name="history_type" onchange="this.form.submit()">
                 <?php
                 echo $liste_deroulante_history_type;
                 ?>
-            </select>
-        </div>
-        <?php if(false) { ?>
-        <div class="field">
-            <label for="history_cat">Choix categorie</label>
-            <select name="history_cat" onchange="this.form.submit()">
-                <?php
-                echo $liste_deroulante_category;
-                ?>
-            </select>
-        </div>
-        <?php } ?>
-        <div class="field">
-            <label for="edt-text">Text</label>
-            <input type="text" id="edt-text" name="text" placeholder="truc " value="" maxlength=255 required>
-        </div> 
-        <div class="two fields">
+        </select>
+
+        <label for="history_cat">Choix categorie</label>
+        <select name="history_cat" onchange="this.form.submit()">
+            <?php
+            echo $liste_deroulante_category;
+            ?>
+        </select>
+
+        <label for="edt-text">Text</label>
+        <input type="text" id="edt-text" name="text" placeholder="truc " value="" maxlength=255 required>
+
+        <div class="two-fields">
             <div class="field">
                 <label for="edt-text_choix_1">Text choix 1</label>
                 <input type="text" id="edt-text_choix_1" name="text_choix_1" placeholder="truc " value="" maxlength=255 required>
-            </div>  
+            </div>
             <div class="field">
                 <label for="edt-text_choix_1_id">Suite choix 1 text</label>
                 <select name="text_choix_1_id">
@@ -151,11 +145,12 @@ require './header.php';
                 </select>
             </div>
         </div>
-        <div class="two fields">
+
+        <div class="two-fields">
             <div class="field">
                 <label for="edt-text_choix_2">Text choix 2</label>
                 <input type="text" id="edt-text_choix_2" name="text_choix_2" placeholder="truc " value="" maxlength=255 required>
-            </div>  
+            </div>
             <div class="field">
                 <label for="edt-text_choix_2_id">Suite choix 2 text</label>
                 <select name="text_choix_2_id">
@@ -167,9 +162,9 @@ require './header.php';
                 </select>
             </div>
         </div>
-        <button class="ui button" type="submit" name="add"> Ajouter </button>
+        <button style="width:100px;" type="submit" class="btn btn-primary btn-block btn-large" name="add">Ajouter</button>
     </form>
-</div>                
+</div>
 <!-- **************************************** -->     
 <?php
 require './footer.php';

@@ -66,7 +66,7 @@ if (empty($message_erreur)) {
                         sqlrequest($requete);
                         
                         $message .= "Bienvenue {$utilisateur['Prenom']} <br>";
-                        
+
                         $permsgroup_tag = $utilisateur['permsgroup_tag'];
                         $requete = "select perms_tag from permsgroup_has_perms where permsgroup_tag = '$permsgroup_tag'";
                         $permsgroup = array();
@@ -118,19 +118,12 @@ if (isset($_POST['connexion'])) {
 }
 ?>
 
-<div class="ui segment">
-    <h1 class="ui header">Connexion</h1>
-    <div class="ui divider"></div>
-    <form class="ui form" method="POST" action="login.php">
-        <div class="field">
-            <label>Login</label>
-            <input type="text" name="pseudo" placeholder="Votre pseudo">
-        </div>
-        <div class="field">
-            <label>Mot de passe</label>
-            <input type="password" name="password" placeholder="Votre mot de passe">
-        </div>
-        <button class="ui button" type="submit" name="connexion"> Se connecter </button>
+<div class="login">
+    <h1>Connexion</h1>
+    <form method="POST" action="login.php">
+        <input type="text" name="pseudo" placeholder="Votre pseudo" required="required" />
+        <input type="password" name="password" placeholder="Votre mot de passe" required="required" />
+        <button type="submit" class="btn btn-primary btn-block btn-large" name="connexion">Se connecter</button>
     </form>
 </div>
 <?php

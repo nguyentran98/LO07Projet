@@ -82,25 +82,22 @@ require './header.php';
 if (true) {
     ?>
 
-    <div class="ui segment">     
-        <h1 class="ui header">Gestion utilisateurs</h1>
-        <form class="ui form" method="POST" action="">
-            <h4 class="ui dividing header">Utilisateur</h4>
-            <div class="field">
-                <label for="edit-utilisateurs">Pseudo</label>
-                <select class="ui dropdown" name="utilisateurs">
-                    <?php echo $liste_deroulante_utilisateurs; ?>
-                </select>
-            </div>  
-            <div class="field">
-                <label for="edit-permsgroup">Permissions</label>
-                <select class="ui dropdown" name="permsgroup">
-                    <?php echo $liste_deroulante_permsgroup; ?>
-                </select>
-            </div>
+    <div class="user-permission">
+        <h1>Gestion utilisateurs</h1>
+        <form method="POST" action="">
+            <h4 class="ui dividing header">Coordonnées</h4>
+            <label for="edit-utilisateurs">Pseudo</label>
+            <select class="ui dropdown" name="utilisateurs">
+                <?php echo $liste_deroulante_utilisateurs; ?>
+            </select>
 
-            <button class="ui button" type="submit" name="maj"> MAJ </button>
-            <button class="ui button" type="submit" name="suppr"> Supprimer </button>
+            <label for="edit-permsgroup">Permissions</label>
+            <select class="ui dropdown" name="permsgroup">
+                <?php echo $liste_deroulante_permsgroup; ?>
+            </select>
+            
+            <button style="width:100px; margin-right:10px;" type="submit" class="btn btn-primary btn-block btn-large" name="maj">MAJ</button>
+            <button style="width:100px;" type="submit" class="btn btn-primary btn-block btn-large" name="suppr">Supprimer</button>
         </form>
     </div>
     <?php

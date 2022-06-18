@@ -127,21 +127,16 @@ require './header.php';
 
 <?php if (!isset($session_partie_id)) {
     ?>
-    <div class="ui main text container">
-        <div class="ui segment">
-            <h1 class="ui header">Choisie ton histoire !</h1>
-            <div class="ui divider"></div>
-            <form class="ui form" method="POST" action="play.php">
-                <div class="field">
-                    <label for="history_type">Choix categorie</label>
-                    <select name="history_type" onchange="this.form.submit()">
-                        <?php
-                        echo $liste_deroulante_history_type;
-                        ?>
-                    </select>
-                </div>
-            </form>
-        </div>
+    <div class="play">
+        <h1>Choisie ton histoire !</h1>
+        <form method="POST" action="play.php">
+            <label for="history_type">Choix categorie</label>
+                <select name="history_type" onchange="this.form.submit()">
+                    <?php
+                    echo $liste_deroulante_history_type;
+                    ?>
+            </select>
+        </form>
     </div>
     <?php
 }
@@ -150,20 +145,17 @@ require './header.php';
 
 <?php if (isset($session_partie_id)) {
     ?>
-    <div class="ui main text container">
-        <div class="ui segment">
-            <h1 class="ui header"><?php echo $text; ?></h1>
-            <div class="ui divider"></div>
-            <form class="ui form" method="POST" action="play.php">
-                <?php if (isset($choix1text) AND isset($choix1id) AND!$finjeu) { ?>
-                    <button class="ui button" type="submit" name="choix1"> <?php echo $choix1text; ?> </button>
-                <?php } if (isset($choix2text) AND isset($choix2id) AND!$finjeu) { ?>
-                    <button class="ui button" type="submit" name="choix2"> <?php echo $choix1text; ?> </button>
-                <?php } if ($finjeu) { ?>
-                    <button class="ui button" type="submit" name="findepartie"> Finir la partie </button>
-                <?php } ?>
-            </form>
-        </div>
+    <div class="play">
+        <h1><?php echo $text; ?></h1>
+        <form method="POST" class="play-form" action="play.php">
+            <?php if (isset($choix1text) AND isset($choix1id) AND!$finjeu) { ?>
+                <button class="btn btn-primary btn-block btn-large" style="width:160px; margin-top:10px; font-size:20px;" type="submit" name="choix1"> <?php echo $choix1text; ?> </button>
+            <?php } if (isset($choix2text) AND isset($choix2id) AND!$finjeu) { ?>
+                <button class="btn btn-primary btn-block btn-large" style="width:160px; margin-top:10px; font-size:20px;" type="submit" name="choix2"> <?php echo $choix1text; ?> </button>
+            <?php } if ($finjeu) { ?>
+                <button class="btn btn-primary btn-block btn-large" style="width:160px; margin-top:10px; font-size:20px;" type="submit" name="findepartie"> Finir la partie </button>
+            <?php } ?>
+        </form>
     </div>
     <?php
 }

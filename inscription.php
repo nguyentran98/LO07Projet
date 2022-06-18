@@ -114,7 +114,7 @@ if (empty($message_erreur)) {
             // Affiche un message de confirmation ainsi que les valeurs saisies
             $message .= "    <p>Nous avons pris en compte votre inscription.</p>\n";
             $message .= "    Voici les données saisies :\n    <ul>\n";
-            $message .= "      <li>Civilité : " . $civilite . "</li>\n";
+            // $message .= "      <li>Civilité : " . $civilite . "</li>\n";
             $message .= "      <li>Nom : " . $nom . "</li>\n";
             $message .= "      <li>Prénom : " . $prenom . "</li>\n";
             $message .= "      <li>Pseudo : " . $Pseudo . "</li>\n";
@@ -138,7 +138,7 @@ require './header.php';
 // S'il y a eu des erreurs ou si aucun appui sur le bouton "S'incrire"
 if (!empty($message_erreur) || !(isset($_POST['inscrire']))) {
     ?>
-    <div class="ui segment">     
+    <!-- <div class="ui segment">     
         <h1 class="ui header">Inscription</h1>
         <form class="ui form" method="POST" action="">
             <h4 class="ui dividing header">Coordonnées</h4>
@@ -168,6 +168,19 @@ if (!empty($message_erreur) || !(isset($_POST['inscrire']))) {
                 </div>
             </div>
             <button class="ui button" type="submit" name="inscrire"> S'inscrire </button>
+        </form>
+    </div> -->
+    <div class="register">
+        <h1>Inscription</h1>
+        <form method="POST" action="">
+            <h4 class="ui dividing header">Coordonnées</h4>
+            <input type="text" id="edit-nom" name="nom" placeholder="Nom" value="<?php echo $nom ?>" maxlength=100 required>
+            <input type="text" id="edit-prenom" name="prenom" placeholder="Prénom" value="<?php echo $prenom ?>" maxlength=100 required>
+            <h4 class="ui dividing header">Informations de connexion</h4>
+            <input type="text" id="edit-pseudo" name="Pseudo" placeholder="Pseudo" value="<?php echo $Pseudo ?>" minlength="5" maxlength=10 required>
+            <input type="password" id="edit-passe1" name="passe1" placeholder="Mot de passe" value="" minlength="6" required>
+            <input type="password" id="edit-passe2" name="passe2" placeholder="Mot de passe" value="" minlength="6" required>
+            <button type="submit" class="btn btn-primary btn-block btn-large" name="inscrire">S'inscrire</button>
         </form>
     </div>
     <?php

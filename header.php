@@ -5,11 +5,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="semantic.min.css">
-        <style>
-            .main.container {
-                margin-top: 4em;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="main.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
     </head>
     <body>
         <div class="ui inverted fixed menu">
@@ -17,9 +16,19 @@
             <?php
             if (isset($session_idutilisateur)) {
                 ?>
-                <div class="item right"><?php echo "$session_prenom $session_nom ($session_pseudo)"; ?></div>
-                <a class="item" href="logout.php">Déconnecter</a>
-                <a class="item" href="inscription.php">Compte</a>
+                <div class="item-control lg-screen">
+                    <div class="item"><?php echo "$session_prenom $session_nom ($session_pseudo)"; ?></div>
+                    <a class="item" href="logout.php">Déconnecter</a>
+                    <a class="item" href="inscription.php">Compte</a>
+                </div>
+                <div class="dropdown item-control sm-screen">
+                    <div class="item item-modified"><?php echo "$session_prenom $session_nom ($session_pseudo)"; ?></div>
+                    <button class="dropdown-toggle btn-modified" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="logout.php">Déconnecter</a></li>
+                        <li><a class="dropdown-item" href="inscription.php">Compte</a></li>
+                    </ul>
+                </div>
                 <?php
                 if (in_array('admin', $session_permsgroup)) {
                     ?>
@@ -28,8 +37,8 @@
                 }
             } else {
                 ?>
-                <div class="item right">- - ( - )</div>
-                <a class="item" href="login.php">Connecter</a>
+                <!-- <div class="item right">- - ( - )</div> -->
+                <a class="item right" href="login.php">Connecter</a>
                 <a class="item" href="inscription.php">S'inscrire</a>
             <?php } ?>
         </div>
@@ -49,7 +58,7 @@
                                 echo '<div class="ui green message">' . $logs_message . "</div>\n";
                             }
                             ?>
-                        </div>                
+                        </div>
                     </div>          
                     <?php
                 }
@@ -71,9 +80,9 @@
                         }
                         ?>
                     </div>                
-                </div>    
+                </div>
                 <?php
             }
             ?>
 
-        </div> 
+        </div>

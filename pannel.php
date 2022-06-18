@@ -83,18 +83,18 @@ require './base_deconnexion.php';
 require './header.php';
 ?>
 
-<div class="ui segment">
-    <a class="ui button" href="gestion_utilisateurs.php"> Gestion utilisateurs </a>
-    <a class="ui button" href="gestion_histoires.php"> Gestion histoires </a>
-</div>      
-<div class="ui segment">
-    <p> Nombres d'utilisateurs : <?php echo $nbutilisateur ?> </p>
-    <p> Nombres de connexions aujourd'hui : <?php echo $nbconnexionday ?> </p>
-    <p> Nombres de connexions total : <?php echo $nbconnexiontotal ?> </p>
-    <p> Nombres de partie(s) jouée(s) aujourd'hui : <?php echo $nbpartieday ?> </p>
-    <p> Nombres de partie(s) jouée(s) total : <?php echo $nbpartietotal ?> </p>
+<div class="pannel">
+    <div class = "pannel-btn-container">
+        <a class="btn btn-primary btn-block btn-large" style="width:180px; font-size: 18px; padding:10px" href="gestion_utilisateurs.php"> Gestion utilisateurs </a>
+        <a class="btn btn-primary btn-block btn-large" style="width:180px; font-size: 18px; padding:10px" href="gestion_histoires.php"> Gestion histoires </a>
+    </div> 
+    <h4 class="ui header">Nombres d'utilisateurs : <?php echo $nbutilisateur ?> </h4>
+    <h4 class="ui header">Nombres de connexions aujourd'hui : <?php echo $nbconnexionday ?></h4>
+    <h4 class="ui header">Nombres de connexions total : <?php echo $nbconnexiontotal ?></h4>
+    <h4 class="ui header">Nombres de connexions total : <?php echo $nbconnexiontotal ?></h4>
+    <h4 class="ui header">Nombres de partie(s) jouée(s) total : <?php echo $nbpartietotal ?></h4>
 </div>
-<!-- **************************************** -->     
+<!-- **************************************** -->
 <?php
 require './footer.php';
 ?>

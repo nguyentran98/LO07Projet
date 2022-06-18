@@ -16,7 +16,7 @@ require './header.php';
 if (true) {
     ?>
 
-    <a class="ui button" href="play.php"> Jouer </a>
+    <a class="btn btn-primary btn-block btn-large play-button" href="play.php"> Jouer </a>
 
     <?php
 }
