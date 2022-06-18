@@ -37,15 +37,22 @@ if ($resultat) {
 }
 
 // Récupération du nombre de partie joué aujourd'hui
-$requete = "SELECT * FROM play_logs WHERE datetime >= CURDATE()
-  AND datetime < CURDATE() + INTERVAL 1 DAY";
+$requete = "SELECT * FROM play_logs WHERE datetime >= CURDATE() AND datetime < CURDATE() + INTERVAL 1 DAY";
 $resultat = sqlrequest($requete);
 if ($resultat) {
     $nbpartieday = mysqli_num_rows($resultat);
 }
 
 // Récupération du nombre de partie joué total
-$requete = "SELECT id FROM play_logs;";
+$requete = "SELECT id FROM jeu WHERE datetime >= CURDATE() AND DateTerminer < CURDATE() + INTERVAL 1 DAY";
+$resultat = sqlrequest($requete);
+if ($resultat) {
+    $nbpartietotal = mysqli_num_rows($resultat);
+}
+
+
+// Récupération du nombre de partie joué total
+$requete = "SELECT id FROM jeu;";
 $resultat = sqlrequest($requete);
 if ($resultat) {
     $nbpartietotal = mysqli_num_rows($resultat);
@@ -93,6 +100,7 @@ require './header.php';
     <h4 class="ui header">Nombres d'utilisateurs : <?php echo $nbutilisateur ?> </h4>
     <h4 class="ui header">Nombres de connexions aujourd'hui : <?php echo $nbconnexionday ?></h4>
     <h4 class="ui header">Nombres de connexions total : <?php echo $nbconnexiontotal ?></h4>
+    <h4 class="ui header">Nombres de partie(s) jouée(s) total : <?php echo $nbpartieauj ?></h4>
     <h4 class="ui header">Nombres de partie(s) jouée(s) total : <?php echo $nbpartietotal ?></h4>
 </div>
 <!-- **************************************** -->
