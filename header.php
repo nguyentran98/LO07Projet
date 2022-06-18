@@ -12,7 +12,8 @@
     </head>
     <body>
         <div class="ui inverted fixed menu">
-            <a class="ui item" href="index.php">HOME</a> 
+            <a class="ui item" href="play.php">Play</a>
+            <a class="ui item" href="mygames.php"> Mes parties jouées </a>
             <?php
             if (isset($session_idutilisateur)) {
                 ?>

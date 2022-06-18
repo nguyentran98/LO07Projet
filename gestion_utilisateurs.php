@@ -85,7 +85,6 @@ if (true) {
     <div class="user-permission">
         <h1>Gestion utilisateurs</h1>
         <form method="POST" action="">
-            <h4 class="ui dividing header">Coordonnées</h4>
             <label for="edit-utilisateurs">Pseudo</label>
             <select class="ui dropdown" name="utilisateurs">
                 <?php echo $liste_deroulante_utilisateurs; ?>

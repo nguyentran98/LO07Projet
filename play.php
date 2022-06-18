@@ -85,10 +85,19 @@ if (isset($_POST['choix1']) OR isset($_POST['choix2'])) {
         $histoire_id = $_SESSION['session_choix2id'];
     }
 
-    $requete = "INSERT INTO play_logs (datetime, jeu_IdJeu, histoire_id) VALUES (current_timestamp(), $session_partie_id, $histoire_id)";
-    sqlrequest($requete);
-}
+    $requete = "SELECT id FROM play_logs WHERE jeu_IdJeu = $session_partie_id AND choix_id IS NULL";
+    $resultat = sqlrequest($requete);
+    if ($resultat) {
+        $ligne = mysqli_fetch_assoc($resultat);
+        $play_logs_id = $ligne['id'];
 
+        $requete = "UPDATE play_logs SET choix_id = $histoire_id WHERE play_logs.id = $play_logs_id";
+        sqlrequest($requete);
+
+        $requete = "INSERT INTO play_logs (datetime, jeu_IdJeu, histoire_id) VALUES (current_timestamp(), $session_partie_id, $histoire_id)";
+        sqlrequest($requete);
+    }
+}
 // Récupération des infos de la dernière manche
 if (isset($session_partie_id)) {
     $requete = "SELECT histoire_id FROM play_logs WHERE jeu_IdJeu = $session_partie_id ORDER BY datetime DESC LIMIT 1";
@@ -96,14 +105,6 @@ if (isset($session_partie_id)) {
     if ($resultat) {
         $ligne = mysqli_fetch_assoc($resultat);
         $histoire_id = $ligne['histoire_id'];
-    }
-
-    // Vérifie si c'est la dernière partie de l'histoire
-    $requete = "SELECT * FROM histoire_type WHERE histoire_end_id = $histoire_id";
-    $resultat = sqlrequest($requete);
-    $nbligne = mysqli_num_rows($resultat);
-    if ($nbligne != 0) {
-        $finjeu = true;
     }
 
     $requete = "SELECT * FROM histoire WHERE id = $histoire_id";
@@ -115,6 +116,20 @@ if (isset($session_partie_id)) {
         $choix1id = $_SESSION['session_choix1id'] = $ligne['choix1_id'];
         $choix2text = $ligne['choix2_text'];
         $choix2id = $_SESSION['session_choix2id'] = $ligne['choix2_id'];
+
+        
+        // Correcion bug
+        if (empty($choix1text)and !empty($choix1id)) {
+            $choix1text = "not set";
+        }
+        if (empty($choix2text) and !empty($choix2id)) {
+            $choix2text = "not set";
+        }
+        
+        // Vérifie si c'est la dernière partie de l'histoire
+        if (empty($choix1id) and empty($choix2id)) {
+            $finjeu = true;
+        }
     }
 }
 
@@ -131,10 +146,10 @@ require './header.php';
         <h1>Choisie ton histoire !</h1>
         <form method="POST" action="play.php">
             <label for="history_type">Choix categorie</label>
-                <select name="history_type" onchange="this.form.submit()">
-                    <?php
-                    echo $liste_deroulante_history_type;
-                    ?>
+            <select name="history_type" onchange="this.form.submit()">
+                <?php
+                echo $liste_deroulante_history_type;
+                ?>
             </select>
         </form>
     </div>
@@ -151,7 +166,7 @@ require './header.php';
             <?php if (isset($choix1text) AND isset($choix1id) AND!$finjeu) { ?>
                 <button class="btn btn-primary btn-block btn-large" style="width:160px; margin-top:10px; font-size:20px;" type="submit" name="choix1"> <?php echo $choix1text; ?> </button>
             <?php } if (isset($choix2text) AND isset($choix2id) AND!$finjeu) { ?>
-                <button class="btn btn-primary btn-block btn-large" style="width:160px; margin-top:10px; font-size:20px;" type="submit" name="choix2"> <?php echo $choix1text; ?> </button>
+                <button class="btn btn-primary btn-block btn-large" style="width:160px; margin-top:10px; font-size:20px;" type="submit" name="choix2"> <?php echo $choix2text; ?> </button>
             <?php } if ($finjeu) { ?>
                 <button class="btn btn-primary btn-block btn-large" style="width:160px; margin-top:10px; font-size:20px;" type="submit" name="findepartie"> Finir la partie </button>
             <?php } ?>

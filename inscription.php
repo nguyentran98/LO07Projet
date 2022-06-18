@@ -10,6 +10,12 @@ $Pseudo = "";
 $passe1 = "";
 $passe2 = "";
 
+if (logged()) {
+    $nom = $session_nom;
+    $prenom = $session_prenom;
+    $Pseudo = $session_pseudo;
+}
+
 require './base_connexion.php';
 
 require './sqlcommands.php';
@@ -97,15 +103,15 @@ if (empty($message_erreur)) {
 
             // Si aucun message d'erreur
             if (empty($message_erreur)) {
-                // Requête d'insertion de l'utilisateur dans la table utilisateur                
-                $requete = "INSERT INTO utilisateur (nom, prenom, Pseudo, password, create_time) "
-                        . "VALUES ('$nom', '$prenom', '$Pseudo', '$passe_chiffre', current_timestamp());";
-                // Exécution de la requête
-                $resultat = mysqli_query($connexion, $requete);
-                if (!$resultat) {
-                    $message_erreur .= "Erreur de la requête $requete<br>\n";
-                    $message_erreur .= "  Erreur n° " . mysqli_errno($connexion) . " : " . mysqli_error($connexion) . "<br>\n";
+                if (logged()) {
+                    $requete = "UPDATE utilisateur SET Nom = '$nom' Prenom = '$prenom' Pseudo = '$pseudo' password = '$passe_chiffre' WHERE utilisateur.IdUtilisateur = $session_idutilisateur";
+                } else {
+                    // Requête d'insertion de l'utilisateur dans la table utilisateur                
+                    $requete = "INSERT INTO utilisateur (Nom, Prenom, Pseudo, password, create_time) "
+                            . "VALUES ('$nom', '$prenom', '$Pseudo', '$passe_chiffre', current_timestamp());";
                 }
+                // Exécution de la requête
+                sqlrequest($requete);
             }
         }
 
@@ -138,40 +144,16 @@ require './header.php';
 // S'il y a eu des erreurs ou si aucun appui sur le bouton "S'incrire"
 if (!empty($message_erreur) || !(isset($_POST['inscrire']))) {
     ?>
-    <!-- <div class="ui segment">     
-        <h1 class="ui header">Inscription</h1>
-        <form class="ui form" method="POST" action="">
-            <h4 class="ui dividing header">Coordonnées</h4>
-            <div class="two fields">
-                <div class="field">
-                    <label for="edit-nom">Nom</label>
-                    <input type="text" id="edit-nom" name="nom" placeholder="Nom" value="<?php echo $nom ?>" maxlength=100 required>
-                </div>
-                <div class="field">
-                    <label for="edit-prenom">Prénom</label>
-                    <input type="text" id="edit-prenom" name="prenom" placeholder="Prénom" value="<?php echo $prenom ?>" maxlength=100 required>
-                </div>
-            </div>
-            <h4 class="ui dividing header">Informations de connexion</h4>
-            <div class="field">
-                <label for="edit-pseudo">Pseudo</label>
-                <input type="text" id="edit-pseudo" name="Pseudo" placeholder="Pseudo" value="<?php echo $Pseudo ?>" minlength="5" maxlength=10 required>
-            </div>  
-            <div class="two fields">
-                <div class="field">
-                    <label for="edit-passe1">Mot de passe</label>
-                    <input type="password" id="edit-passe1" name="passe1" placeholder="Mot de passe" value="" minlength="6" required>
-                </div>  
-                <div class="field">
-                    <label for="edit-passe2">Confirmer le mot de passe</label>
-                    <input type="password" id="edit-passe2" name="passe2" placeholder="Mot de passe" value="" minlength="6" required>
-                </div>
-            </div>
-            <button class="ui button" type="submit" name="inscrire"> S'inscrire </button>
-        </form>
-    </div> -->
     <div class="register">
-        <h1>Inscription</h1>
+        <h1>
+            <?php
+            if (logged()) {
+                echo "Mon compte";
+            } else {
+                echo "Inscription";
+            }
+            ?>
+        </h1>
         <form method="POST" action="">
             <h4 class="ui dividing header">Coordonnées</h4>
             <input type="text" id="edit-nom" name="nom" placeholder="Nom" value="<?php echo $nom ?>" maxlength=100 required>
@@ -180,7 +162,14 @@ if (!empty($message_erreur) || !(isset($_POST['inscrire']))) {
             <input type="text" id="edit-pseudo" name="Pseudo" placeholder="Pseudo" value="<?php echo $Pseudo ?>" minlength="5" maxlength=10 required>
             <input type="password" id="edit-passe1" name="passe1" placeholder="Mot de passe" value="" minlength="6" required>
             <input type="password" id="edit-passe2" name="passe2" placeholder="Mot de passe" value="" minlength="6" required>
-            <button type="submit" class="btn btn-primary btn-block btn-large" name="inscrire">S'inscrire</button>
+            <button type="submit" class="btn btn-primary btn-block btn-large" name="inscrire">
+                <?php
+                if (logged()) {
+                    echo "Modifier les informations";
+                } else {
+                    echo "S'inscrire";
+                }
+                ?></button>
         </form>
     </div>
     <?php
