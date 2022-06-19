@@ -47,7 +47,7 @@ if ($resultat) {
 $requete = "SELECT id FROM jeu WHERE datetime >= CURDATE() AND DateTerminer < CURDATE() + INTERVAL 1 DAY";
 $resultat = sqlrequest($requete);
 if ($resultat) {
-    $nbpartietotal = mysqli_num_rows($resultat);
+    $nbpartieauj = mysqli_num_rows($resultat);
 }
 
 
