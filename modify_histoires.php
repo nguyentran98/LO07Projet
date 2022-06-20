@@ -8,6 +8,8 @@ if (isset($_POST['history_type'])) {
 
 $liste_deroulante_history_after1 = "<option value=\"null\" selected>---</option> \n";
 $liste_deroulante_history_after2 = "<option value=\"null\" selected>---</option> \n";
+$stext = "";
+$text = "";
 $textchoix1 = "";
 $textchoix2 = "";
 
@@ -40,20 +42,20 @@ if (isset($history_id) OR TRUE) {
             }
         }
     }
-    if (isset($history_id)) {
+    if (isset($history_id) AND $history_id != "null") {
         $requete = "SELECT * FROM histoire WHERE histoire_type_id = $histoire_type_id";
         $resultat = sqlrequest($requete);
         if ($resultat) {
             while ($ligne = mysqli_fetch_assoc($resultat)) {
                 $id = $ligne['id'];
-                $text = $ligne['text'];
+                $stext = $ligne['text'];
                 if ($id == $choix1id) {
-                    $liste_deroulante_history_after1 .= "<option value=\"$id\" selected>$text</option> \n";
+                    $liste_deroulante_history_after1 .= "<option value=\"$id\" selected>$stext</option> \n";
                 } elseif ($id == $choix2id) {
-                    $liste_deroulante_history_after2 .= "<option value=\"$id\" selected>$text</option> \n";
+                    $liste_deroulante_history_after2 .= "<option value=\"$id\" selected>$stext</option> \n";
                 } else {
-                    $liste_deroulante_history_after1 .= "<option value=\"$id\">$text</option> \n";
-                    $liste_deroulante_history_after2 .= "<option value=\"$id\">$text</option> \n";
+                    $liste_deroulante_history_after1 .= "<option value=\"$id\">$stext</option> \n";
+                    $liste_deroulante_history_after2 .= "<option value=\"$id\">$stext</option> \n";
                 }
             }
         }
@@ -117,7 +119,7 @@ require './header.php';
         </select>
 
         <label for="edt-text">Text</label>
-        <input type="text" id="edt-text" name="text" placeholder="..." value="<?php echo $text ?>" maxlength=255 required>
+        <input type="text" id="edt-text" name="text" placeholder="..." value="<?php echo $stext ?>" maxlength=255 required>
 
         <div class="two-fields">
             <div class="field">
