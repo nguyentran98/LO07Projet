@@ -104,7 +104,11 @@ if (empty($message_erreur)) {
             // Si aucun message d'erreur
             if (empty($message_erreur)) {
                 if (logged()) {
-                    $requete = "UPDATE utilisateur SET Nom = '$nom' Prenom = '$prenom' Pseudo = '$pseudo' password = '$passe_chiffre' WHERE utilisateur.IdUtilisateur = $session_idutilisateur";
+                    if($pseudo == $session_pseudo) {
+                    $requete = "UPDATE utilisateur SET Nom = '$nom' Prenom = '$prenom' password = '$passe_chiffre' WHERE utilisateur.IdUtilisateur = $session_idutilisateur";
+                    } else {
+                    $requete = "UPDATE utilisateur SET Nom = '$nom' Prenom = '$prenom' Pseudo = '$pseudo' password = '$passe_chiffre' WHERE utilisateur.IdUtilisateur = $session_idutilisateur";    
+                    }
                 } else {
                     // Requête d'insertion de l'utilisateur dans la table utilisateur                
                     $requete = "INSERT INTO utilisateur (Nom, Prenom, Pseudo, password, create_time) "
