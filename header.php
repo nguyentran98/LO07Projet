@@ -21,11 +21,11 @@
                     <a class="item" href="mygames.php">Mes parties jouées</a>
                     <a class="item" href="inscription.php">Compte</a>
                     <?php
-                    if (in_array('admin', $session_permsgroup)) {
+                    if (in_array('modo', $session_permsgroup)) {
                         ?>
                         <a class="item" href="pannel.php">Pannel administrateur</a>
-                        <?php }
-                    ?>
+                        <?php
+                    }?>
                     <a class="item" href="logout.php">Déconnecter</a>
                 </div>
                 <div class="dropdown item-control sm-screen">
@@ -35,11 +35,62 @@
                         <li><a class="dropdown-item" href="mygames.php">Mes parties jouées</a></li>
                         <li><a class="dropdown-item" href="inscription.php">Compte</a></li>
                         <?php
-                        if (in_array('admin', $session_permsgroup)) {
+                        if (in_array('modo', $session_permsgroup)) {
                             ?>
                             <li><a class="dropdown-item" href="pannel.php">Pannel administrateur</a></li>
-                            <?php }
+                            <?php
+                        }?>
+                        <li><a class="dropdown-item" href="logout.php">Déconnecter</a></li>
+                    </ul>
+                </div>
+                <?php
+            } else {
+                ?>
+                <a class="item right" href="login.php">Connecter</a>
+                <a class="item" href="inscription.php">S'inscrire</a>
+            <?php } ?>
+        </div>
+        <div class="ui main text container">
+            <?php
+            if ($logs) {
+                if (!empty($logs_message) || !empty($logs_message_erreur)) {
+                    ?>
+                    <div class="ui segment">
+                        <h1 class="ui header"> Logs admins </h1>
+                        <div id="logs">
+                            <?php
+                            if (!empty($logs_message_erreur)) {
+                                echo '<div class="ui red message">' . $logs_message_erreur . "</div>\n";
+                            }
+                            if (!empty($logs_message)) {
+                                echo '<div class="ui green message">' . $logs_message . "</div>\n";
+                            }
+                            ?>
+                        </div>
+                    </div>         
+                    <?php
+                }
+            }
+            ?>
+
+            <?php
+            if (!empty($message_erreur) || !empty($message)) {
+                ?>
+                <div class="ui segment">
+                    <h1 class="ui header"> Logs </h1>
+                    <div id="logs">
+                        <?php
+                        if (!empty($message_erreur)) {
+                            echo '<div class="ui red message">' . $message_erreur . "</div>\n";
+                        }
+                        if (!empty($message)) {
+                            echo '<div class="ui green message">' . $message . "</div>\n";
+                        }
                         ?>
-                    <li><a class="dropdown-item" href="logout.php">Déconnecter</a></li>
-                </ul>
-            </div>
+                    </div>                
+                </div>
+                <?php
+            }
+            ?>
+
+        </div>
