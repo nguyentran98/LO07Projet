@@ -123,16 +123,16 @@ require './header.php';
         </select>
         <?php if (empty($history_type_id) OR $history_type_id == "null") { ?>
             <label for="edt-text">Nouvelle type histoire</label>
-            <input type="text" id="edt-text" name="histoiretype" placeholder="truc " value="" maxlength=255 required>
+            <input type="text" id="edt-text" name="histoiretype" placeholder="..." value="" maxlength=255 required>
         <?php } ?>
 
         <label for="edt-text">Text</label>
-        <input type="text" id="edt-text" name="text" placeholder="truc " value="" maxlength=255 required>
+        <input type="text" id="edt-text" name="text" placeholder="..." value="" maxlength=255 required>
 
         <div class="two-fields">
             <div class="field">
                 <label for="edt-text_choix_1">Text choix 1</label>
-                <input type="text" id="edt-text_choix_1" name="text_choix_1" placeholder="truc " value="" maxlength=255>
+                <input type="text" id="edt-text_choix_1" name="text_choix_1" placeholder="..." value="" maxlength=255>
             </div>
             <div class="field">
                 <label for="edt-text_choix_1_id">Suite choix 1 text</label>
@@ -147,7 +147,7 @@ require './header.php';
         <div class="two-fields">
             <div class="field">
                 <label for="edt-text_choix_2">Text choix 2</label>
-                <input type="text" id="edt-text_choix_2" name="text_choix_2" placeholder="truc " value="" maxlength=255>
+                <input type="text" id="edt-text_choix_2" name="text_choix_2" placeholder="..." value="" maxlength=255>
             </div>
             <div class="field">
                 <label for="edt-text_choix_2_id">Suite choix 2 text</label>
