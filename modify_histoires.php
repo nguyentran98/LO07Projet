@@ -1,18 +1,6 @@
 <?php
 require './assets.php';
 
-$history_id = null;
-if (isset($_POST['history_type'])) {
-    $history_id = trim(htmlspecialchars($_POST['history_type']));
-}
-
-$liste_deroulante_history_after1 = "<option value=\"null\" selected>---</option> \n";
-$liste_deroulante_history_after2 = "<option value=\"null\" selected>---</option> \n";
-$stext = "";
-$text = "";
-$textchoix1 = "";
-$textchoix2 = "";
-
 require './authentification.php';
 forcelog('modo');
 
@@ -20,30 +8,54 @@ require './base_connexion.php';
 
 require './sqlcommands.php';
 
+$liste_deroulante_history_after1 = "<option value=\"null\" selected>---</option> \n";
+$liste_deroulante_history_after2 = "<option value=\"null\" selected>---</option> \n";
+$stext = "";
+$Ttext = "";
+$text = "";
+$textchoix1 = "";
+$textchoix2 = "";
+$histoire_type_id = "";
+
+$history_id = "null";
+if (isset($_POST['history_type'])) {
+    $history_id = trim(htmlspecialchars($_POST['history_type']));
+}
+
 // Listage des types choisie de d'histoires
-if (isset($history_id) OR TRUE) {
-    $requete = "SELECT histoire.*, histoire_type.name  FROM histoire LEFT JOIN histoire_type ON histoire.histoire_type_id = histoire_type.id";
-    $liste_deroulante_history_type = "<option value=\"null\" selected>---</option> \n";
-    $resultat = sqlrequest($requete);
-    if ($resultat) {
-        while ($ligne = mysqli_fetch_assoc($resultat)) {
-            $id = $ligne['id'];
-            $text = $ligne['text'];
-            $name = $ligne['name'];
-            $histoire_type_id = $ligne['histoire_type_id'];
-            if ($id == $history_id) {
-                $liste_deroulante_history_type .= "<option value=\"$id\" selected>($name) $text</option> \n";
-                $textchoix1 = $ligne['choix1_text'];
-                $choix1id = $ligne['choix1_id'];
-                $textchoix2 = $ligne['choix2_text'];
-                $choix2id = $ligne['choix2_id'];
-            } else {
-                $liste_deroulante_history_type .= "<option value=\"$id\">($name) $text</option> \n";
-            }
+$requete = "SELECT histoire.*, histoire_type.name  FROM histoire LEFT JOIN histoire_type ON histoire.histoire_type_id = histoire_type.id";
+$liste_deroulante_history_type = "<option value=\"null\" selected>---</option> \n";
+$resultat = sqlrequest($requete);
+if ($resultat) {
+    while ($ligne = mysqli_fetch_assoc($resultat)) {
+        $id = $ligne['id'];
+        $text = $ligne['text'];
+        $name = $ligne['name'];
+        $histoire_type_id = $ligne['histoire_type_id'];
+        if ($id == $history_id) {
+            $liste_deroulante_history_type .= "<option value=\"$id\" selected>($name) $text</option> \n";
+            $textchoix1 = $ligne['choix1_text'];
+            $choix1id = $ligne['choix1_id'];
+            $textchoix2 = $ligne['choix2_text'];
+            $choix2id = $ligne['choix2_id'];
+        } else {
+            $liste_deroulante_history_type .= "<option value=\"$id\">($name) $text</option> \n";
         }
     }
-    if (isset($history_id) AND $history_id != "null") {
-        $requete = "SELECT * FROM histoire WHERE histoire_type_id = $histoire_type_id";
+}
+
+if ($history_id != "null") {
+    $requete = "SELECT * FROM histoire WHERE id = '$history_id'";
+    $resultat = sqlrequest($requete);
+    if ($resultat) {
+        $ligne = mysqli_fetch_assoc($resultat);
+        $Ttext = $ligne['text'];
+        $textchoix1 = $ligne['choix1_text'];
+        $choix1id = $ligne['choix1_id'];
+        $textchoix2 = $ligne['choix2_text'];
+        $choix2id = $ligne['choix2_id'];
+        $histoire_type_id = $ligne['histoire_type_id'];
+        $requete = "SELECT * FROM histoire WHERE histoire_type_id = '$histoire_type_id'";
         $resultat = sqlrequest($requete);
         if ($resultat) {
             while ($ligne = mysqli_fetch_assoc($resultat)) {
@@ -61,6 +73,7 @@ if (isset($history_id) OR TRUE) {
         }
     }
 }
+
 
 if (isset($_POST['add'])) {
     //***************************
@@ -111,7 +124,7 @@ require './header.php';
 <div class="history">
     <h1>Modifier une histoire</h1>
     <form method="POST" action="">
-        <label for="history_type">Choix type d'histoire</label>
+        <label for="history_type">Choix de l'histoire à modif</label>
         <select name="history_type" onchange="this.form.submit()">
             <?php
             echo $liste_deroulante_history_type;
@@ -119,12 +132,12 @@ require './header.php';
         </select>
 
         <label for="edt-text">Text</label>
-        <input type="text" id="edt-text" name="text" placeholder="..." value="<?php echo $stext ?>" maxlength=255 required>
+        <input type="text" id="edt-text" name="text" placeholder="..." value="<?php echo $Ttext; ?>" maxlength=255 required>
 
         <div class="two-fields">
             <div class="field">
                 <label for="edt-text_choix_1">Text choix 1</label>
-                <input type="text" id="edt-text_choix_1" name="text_choix_1" placeholder="..." value="<?php echo $textchoix1 ?>" maxlength=255>
+                <input type="text" id="edt-text_choix_1" name="text_choix_1" placeholder="..." value="<?php echo $textchoix1; ?>" maxlength=255>
             </div>
             <div class="field">
                 <label for="edt-text_choix_1_id">Suite choix 1 text</label>
@@ -141,7 +154,7 @@ require './header.php';
         <div class="two-fields">
             <div class="field">
                 <label for="edt-text_choix_2">Text choix 2</label>
-                <input type="text" id="edt-text_choix_2" name="text_choix_2" placeholder="..." value="<?php echo $textchoix2 ?>" maxlength=255>
+                <input type="text" id="edt-text_choix_2" name="text_choix_2" placeholder="..." value="<?php echo $textchoix2; ?>" maxlength=255>
             </div>
             <div class="field">
                 <label for="edt-text_choix_2_id">Suite choix 2 text</label>

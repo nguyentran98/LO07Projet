@@ -58,16 +58,6 @@ if (isset($_POST['maj'])) {
     sqlrequest($requete);
 }
 
-// Suppression d'un utilisateur
-if (isset($_POST['suppr'])) {
-    $idutilisateur = trim(htmlspecialchars($_POST['utilisateurs']));
-
-    $requete = "DELETE FROM utilisateur WHERE utilisateur.IdUtilisateur = $idutilisateur";
-    sqlrequest($requete);
-    
-    majplayerlist();
-}
-
 require './base_deconnexion.php';
 
 // **********************************************
@@ -97,7 +87,6 @@ if (true) {
             
             <div style="display:flex; justify-content:space-around;">
                 <button  type="submit" class="btn btn-primary btn-block btn-large" style="width:45%; margin-top:10px; font-size:20px;" name="maj">MAJ</button>
-                <button type="submit" class="btn btn-primary btn-block btn-large" style="width:45%; margin-top:10px; font-size:20px;" name="suppr">Supprimer</button>
             </div>
         </form>
     </div>
