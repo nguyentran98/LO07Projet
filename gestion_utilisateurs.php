@@ -95,8 +95,10 @@ if (true) {
                 <?php echo $liste_deroulante_permsgroup; ?>
             </select>
             
-            <button style="width:100px; margin-right:10px;" type="submit" class="btn btn-primary btn-block btn-large" name="maj">MAJ</button>
-            <button style="width:100px;" type="submit" class="btn btn-primary btn-block btn-large" name="suppr">Supprimer</button>
+            <div style="display:flex; justify-content:space-around;">
+                <button  type="submit" class="btn btn-primary btn-block btn-large" style="width:45%; margin-top:10px; font-size:20px;" name="maj">MAJ</button>
+                <button type="submit" class="btn btn-primary btn-block btn-large" style="width:45%; margin-top:10px; font-size:20px;" name="suppr">Supprimer</button>
+            </div>
         </form>
     </div>
     <?php

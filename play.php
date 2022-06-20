@@ -164,11 +164,11 @@ require './header.php';
         <h1><?php echo $text; ?></h1>
         <form method="POST" class="play-form" action="play.php">
             <?php if (isset($choix1text) AND isset($choix1id) AND!$finjeu) { ?>
-                <button class="btn btn-primary btn-block btn-large" style="width:160px; margin-top:10px; font-size:20px;" type="submit" name="choix1"> <?php echo $choix1text; ?> </button>
+                <button class="btn btn-primary btn-block btn-large" style="width:45%; margin-top:10px; font-size:20px;" type="submit" name="choix1"> <?php echo $choix1text; ?> </button>
             <?php } if (isset($choix2text) AND isset($choix2id) AND!$finjeu) { ?>
-                <button class="btn btn-primary btn-block btn-large" style="width:160px; margin-top:10px; font-size:20px;" type="submit" name="choix2"> <?php echo $choix2text; ?> </button>
+                <button class="btn btn-primary btn-block btn-large" style="width:45%; margin-top:10px; font-size:20px;" type="submit" name="choix2"> <?php echo $choix2text; ?> </button>
             <?php } if ($finjeu) { ?>
-                <button class="btn btn-primary btn-block btn-large" style="width:160px; margin-top:10px; font-size:20px;" type="submit" name="findepartie"> Finir la partie </button>
+                <button class="btn btn-primary btn-block btn-large" style="width:45%; margin-top:10px; font-size:20px;" type="submit" name="findepartie"> Finir la partie </button>
             <?php } ?>
         </form>
     </div>

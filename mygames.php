@@ -43,7 +43,7 @@ require './header.php';
 <div class="user-permission">
     <h1>Récapitulation</h1>
     <form method="POST" action="">
-        <label for="edit-utilisateurs">Choix de la partie</label>
+        <label for="partie_id">Choix de la partie</label>
         <select name="partie_id" onchange="this.form.submit()">
             <?php
             echo $liste_deroulante_parties;
