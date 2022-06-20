@@ -11,7 +11,7 @@
 
 * { -webkit-box-sizing:border-box; -moz-box-sizing:border-box; -ms-box-sizing:border-box; -o-box-sizing:border-box; box-sizing:border-box; }
 
-html { width: 100%; height:100%; overflow:hidden; }
+html { width: 100%; height:100%; overflow:auto; }
 
 body { 
     width: 100%;
@@ -155,6 +155,7 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
 
 .two-fields{
     display:flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 
@@ -163,7 +164,7 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
 }
 
 /* Responsive */
-@media (min-width: 600px){
+@media (min-width: 471px){
     .login,
     .register,
     .user-permission,
@@ -171,16 +172,8 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
         width: 400px;
     }
 
-    .history {
-        width: 900px;
-    }
-
     .play-form {
         min-width: 400px;
-    }
-
-    .sm-screen {
-        display: none;
     }
 
     .login h1, .register h1, .history h1, .play h1, .user-permission h1, .pannel h1{
@@ -201,15 +194,31 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
     }
 }
 
-@media (max-width: 599px) {
+@media (max-width: 470px) {
     .login,
     .register,
     .pannel,
     .play {
-        width: 85%;
+        width: 90%;
+    }
+}
+
+@media (min-width: 951px) {
+    .sm-screen {
+        display: none;
     }
 
+    .history {
+        width: 900px;
+    }
+}
+
+@media (max-width: 950px) {
     .lg-screen {
         display: none;
+    }
+
+    .history {
+        width: 90%;
     }
 }

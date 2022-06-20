@@ -86,12 +86,12 @@ require './header.php';
 
 <div class="pannel">
     <div class="pannel-btn-container">
-        <a class="btn btn-primary btn-block btn-large" style="width:180px; font-size: 18px; padding:10px" href="gestion_utilisateurs.php"> Gestion utilisateurs </a>
-        <a class="btn btn-primary btn-block btn-large" style="width:180px; font-size: 18px; padding:10px" href="add_histoires.php"> Ajouter histoire </a>
+        <a class="btn btn-primary btn-block btn-large" style="width:180px; font-size: 18px; margin: 0 5px; padding:10px" href="gestion_utilisateurs.php"> Gestion utilisateurs </a>
+        <a class="btn btn-primary btn-block btn-large" style="width:180px; font-size: 18px; margin: 0 5px; padding:10px" href="add_histoires.php"> Ajouter histoire </a>
     </div>
     <div class="pannel-btn-container">
-        <a class="btn btn-primary btn-block btn-large" style="width:180px; font-size: 18px; padding:10px" href="modify_histoires.php"> Modifier histoire </a>
-        <a class="btn btn-primary btn-block btn-large" style="width:180px; font-size: 18px; padding:10px" href="allgames.php"> Récapitulatif partie tous les joueurs</a>
+        <a class="btn btn-primary btn-block btn-large" style="width:180px; font-size: 18px; margin: 0 5px; padding:10px" href="modify_histoires.php"> Modifier histoire </a>
+        <a class="btn btn-primary btn-block btn-large" style="width:180px; font-size: 18px; margin: 0 5px; padding:10px" href="allgames.php"> Récapitulatif partie tous les joueurs</a>
     </div>
     <h4 class="ui header">Nombres d'utilisateurs : <?php echo $nbutilisateur ?> </h4>
     <h4 class="ui header">Nombres de connexions aujourd'hui : <?php echo $nbconnexionday ?></h4>

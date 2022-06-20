@@ -13,32 +13,39 @@
     <body>
         <div class="ui inverted fixed menu">
             <a class="ui item" href="play.php">Play</a>
-            <a class="ui item" href="mygames.php"> Mes parties jouées </a>
             <?php
             if (isset($session_idutilisateur)) {
                 ?>
                 <div class="item-control lg-screen">
                     <div class="item"><?php echo "$session_prenom $session_nom ($session_pseudo)"; ?></div>
-                    <a class="item" href="logout.php">Déconnecter</a>
+                    <a class="item" href="mygames.php">Mes parties jouées</a>
                     <a class="item" href="inscription.php">Compte</a>
+                    <?php
+                    if (in_array('admin', $session_permsgroup)) {
+                        ?>
+                        <a class="item" href="pannel.php">Pannel administrateur</a>
+                        <?php
+                    }?>
+                    <a class="item" href="logout.php">Déconnecter</a>
                 </div>
                 <div class="dropdown item-control sm-screen">
                     <div class="item item-modified"><?php echo "$session_prenom $session_nom ($session_pseudo)"; ?></div>
                     <button class="dropdown-toggle btn-modified" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="logout.php">Déconnecter</a></li>
+                    <ul class="dropdown-menu" style="width:160px !important;" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="mygames.php">Mes parties jouées</a></li>
                         <li><a class="dropdown-item" href="inscription.php">Compte</a></li>
+                        <?php
+                        if (in_array('admin', $session_permsgroup)) {
+                            ?>
+                            <li><a class="dropdown-item" href="pannel.php">Pannel administrateur</a></li>
+                            <?php
+                        }?>
+                        <li><a class="dropdown-item" href="logout.php">Déconnecter</a></li>
                     </ul>
                 </div>
                 <?php
-                if (in_array('admin', $session_permsgroup)) {
-                    ?>
-                    <a class="item" href="pannel.php">Pannel administrateur</a>
-                    <?php
-                }
             } else {
                 ?>
-                <!-- <div class="item right">- - ( - )</div> -->
                 <a class="item right" href="login.php">Connecter</a>
                 <a class="item" href="inscription.php">S'inscrire</a>
             <?php } ?>
@@ -60,7 +67,7 @@
                             }
                             ?>
                         </div>
-                    </div>          
+                    </div>         
                     <?php
                 }
             }
