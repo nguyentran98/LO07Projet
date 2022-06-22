@@ -14,3 +14,4 @@ Installation :
 - Lancer la page admin de service MySQL
 - Importer le fichier "db.sql"
 - Ouvrir le projet dans le dossier LO07Projet"" dans NetBeans
+- Se connecter par le compte admin ou s'incrire un nouveau compte
